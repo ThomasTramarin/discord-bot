@@ -1,0 +1,12 @@
+services:
+  bot:
+    container_name: discord-bot
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      - .:/app
+      - /app/node_modules
+    env_file: .env
+    command: npm run dev
+    restart: unless-stopped
