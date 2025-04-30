@@ -15,6 +15,7 @@ Create a `.env` file in the root of the project
 
 ```env
 TOKEN=your_bot_token
+CLIENT_ID=your_client_id
 ```
 
 ### 3. **Running the bot:**

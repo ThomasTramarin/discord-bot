@@ -1,21 +1,10 @@
 import { Client, Events, GatewayIntentBits, Message } from "discord.js";
 import dotenv from "dotenv";
+import { ExtendedClient } from "./structures/ExtendedClient";
 dotenv.config();
 
-const client = new Client({
-  intents: [
-    GatewayIntentBits.Guilds,
-    GatewayIntentBits.GuildMessages,
-    GatewayIntentBits.MessageContent,
-  ],
-});
+export const client = new ExtendedClient();
 
-client.once(Events.ClientReady, () => {
-  console.log(`Bot logged in as ${client.user?.tag}`);
-});
-
-client.on(Events.MessageCreate, (message: Message) => {
-  console.log(`New message: ${message.content}`);
-});
-
-client.login(process.env.TOKEN);
+client.start();
+client.loadModules();
+client.deploy();
