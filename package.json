@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "ts-node-dev --poll ./src/index.ts",
+    "dev": "npx prisma migrate deploy && ts-node-dev --poll ./src/index.ts",
     "build": "npx tsc --build"
   },
   "keywords": [],
@@ -12,12 +12,14 @@
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
+    "@prisma/client": "^6.7.0",
     "discord.js": "^14.19.2",
     "dotenv": "^16.5.0",
     "winston": "^3.17.0"
   },
   "devDependencies": {
     "@types/winston": "^2.4.4",
+    "prisma": "^6.7.0",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.8.3"
   }

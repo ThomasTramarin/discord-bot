@@ -7,6 +7,9 @@ COPY package*.json ./
 RUN npm install
     
 COPY . .
+RUN npx prisma generate
+
+
 RUN npm run build
     
 # production stage
@@ -18,8 +21,9 @@ ENV NODE_ENV=production
     
 COPY --from=builder /app/package*.json ./
 COPY --from=builder /app/dist ./dist
+COPY --from=builder /app/prisma ./prisma 
     
   
 RUN npm install --omit=dev --ignore-scripts
     
-CMD ["node", "dist/index.js"]
+CMD ["sh", "-c", "npx prisma migrate deploy && node dist/index.js"]

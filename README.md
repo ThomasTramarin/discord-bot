@@ -16,6 +16,10 @@ Create a `.env` file in the root of the project
 ```env
 TOKEN=your_bot_token
 CLIENT_ID=your_client_id
+POSTGRES_USER=postgres
+POSTGRES_PASSWORD=postgres
+POSTGRES_DB=db_bot
+DATABASE_URL="postgresql://postgres:postgres@db:5432/db_bot?schema=public"
 ```
 
 ### 3. **Running the bot:**
@@ -32,18 +36,10 @@ docker compose up --build
 
 #### Production Mode:
 
-To run the bot in production mode:
-
-1. **Build the container with the production Dockerfile:**
+To run the bot in production mode (simulate a production environment):
 
 ```bash
-docker build -t discord-bot -f Dockerfile .
-```
-
-2. **Run the container:**
-
-```bash
-docker run -d --name discord-bot -e TOKEN="your-token" discord-bot
+docker compose -f compose.prod.yaml up --build
 ```
 
 - This will run the bot in production mode, optimized for performance. It does not reload on code changes.
