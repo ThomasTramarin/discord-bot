@@ -1,8 +1,7 @@
 import { Events, Interaction } from "discord.js";
-import { client } from "../..";
+import { ExtendedClient } from "../../structures/ExtendedClient";
 
-client.on(Events.InteractionCreate, async (interaction: Interaction) => {
-  // If the interaction is not a slash command, return
+export default async (client: ExtendedClient, interaction: Interaction) => {
   if (!interaction.isChatInputCommand()) return;
 
   const command = client.commands.get(interaction.commandName);
@@ -17,4 +16,4 @@ client.on(Events.InteractionCreate, async (interaction: Interaction) => {
   } catch (err) {
     console.error(err);
   }
-});
+};

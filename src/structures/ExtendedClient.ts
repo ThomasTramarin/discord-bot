@@ -74,13 +74,27 @@ export class ExtendedClient extends Client {
       }
     }
 
-    // Load events
-    for (const dir of readdirSync(basePathEvents)) {
-      for (const file of readdirSync(path.join(basePathEvents, dir))) {
-        require(path.join(basePathEvents, dir, file)).default;
+    // Load events based on folder name
+    const eventDirs = readdirSync(basePathEvents).filter(
+      (dir) => path.extname(dir) === ""
+    );
 
-        logger.info(`Loaded event: ${dir}/${file}`);
-      }
+    for (const dir of eventDirs) {
+      const eventName = dir;
+      const eventFolderPath = path.join(basePathEvents, dir);
+
+      const eventFies = readdirSync(eventFolderPath)
+        .filter((file) => file.endsWith(".ts") || file.endsWith(".js"))
+        .sort();
+
+      this.on(eventName, async (...args) => {
+        for (const file of eventFies) {
+          const event = require(path.join(eventFolderPath, file)).default;
+          await event(this, ...args);
+        }
+      });
+
+      logger.info("Loaded event: " + eventName);
     }
   }
 }
